@@ -1,3 +1,5 @@
+const path = require('path');
+const ABSPATH = path.dirname(process.mainModule.filename); 
 const nodemailer = require('nodemailer');
 
 let transporter = nodemailer.createTransport({
@@ -15,7 +17,12 @@ let transporter = nodemailer.createTransport({
     from: 'rgpgrppg@gmail.com',
     to: 'r1ger_pg@hotmail.com',
     subject: 'Sending Email using Node.js',
-    text: 'That was easy!'
+    text: 'That was easy!',
+    attachments: [
+        {
+         path: ABSPATH + '/data/test.txt'
+        }
+     ]    
   };
 
   module.exports = {
