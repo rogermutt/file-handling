@@ -27,9 +27,7 @@ app.post('/', function (req, res){
   form.on('file', function (name, file){
       console.log('Uploaded ' + file.name);
   });
-
-  return res.json(200, {
-            result: 'Upload Success'
-  });
   
+  return res.status(200).json({result: 'Upload Success'})
+
 });
