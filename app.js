@@ -1,6 +1,27 @@
 const express = require('express');
 const app = express();
+
 const formidable = require('formidable');
+const nodemailer = require('nodemailer');
+
+let transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  requireTLS: true,
+  auth: {
+    user: 'rgpgrppg@gmail.com',
+    pass: 'ghtr4#332d'
+  }
+});
+
+var mailOptions = {
+  from: 'rgpgrppg@gmail.com',
+  to: 'r1ger_pg@hotmail.com',
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+};
+
 const port = 3000;
 
 app.use(express.static('public'));
@@ -26,8 +47,22 @@ app.post('/', function (req, res){
 
   form.on('file', function (name, file){
       console.log('Uploaded ' + file.name);
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      
   });
   
   return res.status(200).json({result: 'Upload Success'})
 
 });
+
+
+
+
+
