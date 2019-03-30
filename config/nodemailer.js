@@ -20,7 +20,7 @@ let transporter = nodemailer.createTransport({
     text: 'That was easy!',
     attachments: [
         {
-         path: ABSPATH + '/data/test.txt'
+         path: '/Users/Roger/file-translator/data/test.txt' 
         }
      ]    
   };

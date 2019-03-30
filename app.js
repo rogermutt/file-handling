@@ -1,52 +1,17 @@
 const express = require('express');
 const app = express();
 
-const formidable = require('formidable');
-
-const nodemailer = require('./config/nodemailer');
-const transporter = nodemailer.transporter;
-const mailOptions = nodemailer.mailOptions;
-
 const port = 3000;
 
+const Router = require('./routes/index');
+
 app.use(express.static('public'));
+app.use('/', Router);
 app.set('view engine', 'ejs');
 
 app.listen(port, function(){
   console.log(`Running on port ${port}`);
 });
-
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname,'public', 'index.html'));
-});
-
-app.post('/', function (req, res){
-
-  let form = new formidable.IncomingForm();
-
-  form.parse(req);
-
-  form.on('fileBegin', function (name, file){
-      file.path = __dirname + '/data/' + file.name;
-  });
-
-  form.on('file', function (name, file){
-      console.log('Uploaded ' + file.name);
-
-      transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
-      
-  });
-  
-  return res.status(200).json({result: 'Upload Success'})
-
-});
-
 
 
 
