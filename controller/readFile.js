@@ -1,6 +1,7 @@
 const formidable = require('formidable');
 
 const emailSender = require('./emailSender');
+const imageOutput = require('./outputOCR');
 
 const readFile = req => {
 
@@ -8,9 +9,12 @@ const readFile = req => {
 
     form.parse(req);
   
-    form.on('file', function (name, file){
-        console.log('Uploaded ' + file.name);
-        emailSender(file.name);  
+    form.on('file', async function (name, file){
+
+        await console.log('Uploaded file');
+        let test = await imageOutput(file)
+        await console.log('test ', test);
+
     }); 
 }
 
