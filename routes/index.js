@@ -9,6 +9,8 @@ const mailOptions = nodemailer.mailOptions;
 
 const fs = require('fs');
 
+const regexEmail = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
+
 router.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -24,22 +26,25 @@ router.post('/', function (req, res){
     file.path = '/Users/Roger/file-translator/data/test.txt';
   });
 
-
   form.on('file', function (name, file){
       console.log('Uploaded ' + file.name);
-
-      // transporter.sendMail(mailOptions, function(error, info){
-      //   if (error) {
-      //     console.log(error);
-      //   } else {
-      //     console.log('Email sent: ' + info.response);
-      //   }
-      // });
       
       fs.readFile(`./data/${file.name}`, 'utf-8', function(err, data) {
-        if (err) throw err;
-        console.log('OK: ' + file.name);
-        console.log(data)
+        
+          if (err) throw err;
+          
+          let emailsArray = data.match(regexEmail);
+
+          console.log('Found email: ', emailsArray[0])
+
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + emailsArray[0]);
+            }
+          });        
+        
       }); 
       
   });
