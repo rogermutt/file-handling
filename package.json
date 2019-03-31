@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "git": "git add . && git commit -m",
+    "postgit": "git push --all"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
