@@ -37,11 +37,23 @@ router.post('/', function (req, res){
 
           console.log('Found email: ', emailsArray[0])
 
+          let mailOptions = {
+            from: 'rgpgrppg@gmail.com',
+            to: emailsArray[0],
+            subject: `Please find attached ${file.name}`,
+            text: 'That was easy!',
+            attachments: [
+                {
+                 path: `./data/${file.name}`
+                }
+             ]    
+          };
+
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {
               console.log(error);
             } else {
-              console.log('Email sent: ' + emailsArray[0]);
+              console.log('Email sent');
             }
           });        
         
