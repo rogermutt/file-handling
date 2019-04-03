@@ -7,17 +7,13 @@ async function returnInvoiceAmount(string) {
 
     let regex = /\$[\d|,|.|e|E|\+]+/gi 
 
-    let raw_string_amount_array = text.match(regex)
-    let num_amount_array = raw_string_amount_array.map(amount => amount.replace("$", ""))
+    let amountDue = await text
+        .match(regex)
+        .map(amount => amount.replace("$", ""))
+        .map(el=> parseFloat(el))
+        .reduce((a, b) => Math.max(a, b))
     
-    let clean_num_amount_array = num_amount_array.map(el=> parseFloat(el))
-    
-    let final = clean_num_amount_array.reduce(function(a, b) {
-        return Math.max(a, b);
-    });
-
-    return await final
-
+    return confidence < 50 ? `We think the amount is $${amountDue} ?` : `$${amountDue}`
 }
 
 module.exports = returnInvoiceAmount;
