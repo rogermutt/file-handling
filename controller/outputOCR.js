@@ -2,6 +2,8 @@ const Tesseract = require('tesseract.js')
 
 async function imageOutput (file) {
 
+    console.log( 'running imageOutput' );    
+
     let output = {}
     
     await Tesseract
@@ -12,7 +14,7 @@ async function imageOutput (file) {
         output.confidence = result.confidence
     })
 
-    return await output   
+    return await output
 
 }
 
